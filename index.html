@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GroupKyber</title>
+<meta charset="UTF-8" appcache="groupkyber.appcache">
+<meta name="author" content="F. Ruiz">
+<meta name="robots" content="index">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="images/icon24.png">
+<link rel="shortcut icon" type="image/x-icon" href="images/icon24.png">
+<link href="style.css" rel="stylesheet">
+
+
+<!--License notice and SSL force-->
+<script src="lib/license.js"></script>
+    
+<!--this only loads two regular expressions: blackListExp and wordListExp, plus their lengths-->
+<script src="lib/dictionary_en.js"></script>
+
+<!--Noble Post-Quantum cryptography library 0.2.0 by Paul Miller. https://github.com/paulmillr/noble-post-quantum-->
+<script src="lib-opensrc/noble-post-quantum.js"></script>
+
+<!--Noble symmetric cryptography library 0.6.0 by Paul Miller. https://github.com/paulmillr/noble-ciphers-->
+<script src="lib-opensrc/noble-ciphers.js"></script>
+
+<!--Noble hashes library 1.4.0 by Paul Miller. https://github.com/paulmillr/noble-hashes-->
+<script src="lib-opensrc/noble-hashes.js"></script>
+
+<!--this used to be in TweetNaCl, but they dropped it. https://github.com/dchest/tweetnacl-util-js-->
+<script src="lib-opensrc/nacl-util.js"></script>
+
+<!--group keys added through this file, which contains object GroupKeys-->
+<script src="GroupKeys.js"></script>
+
+<!--main code lives here-->
+<script src="lib/main.js"></script>
+</head>
+
+<body>
+<h1 class="center">GroupKyber</h1>
+<p class="center">&#169; 2024 F. Ruiz</p>
+<p>This app encrypts/decrypts files for a group of users named <span id="groupNameBox"></span>. <span id="help">Click here for Help</span></p>
+<p id="step1">1. Enter your secret Password in the box and press the Accept button. All processing is local; nothing is sent out. You will have to re-enter your Password after 5 minutes of inactivity.</p>
+<div id="pwdArea">
+<div id="pwdMsg" class="message">Password strength will be displayed here</div>
+<p id="pwdProper">
+<input type="password" id="pwdBox" class="cssbox" placeholder="Write your Password here"></input><img id='showPwdMode' class="field-icon" src="images/eye-24.png" title="click this to see/hide Password">
+&nbsp;&nbsp;
+<button id="acceptBtn" class="cssbutton">Accept</button>
+</p>
+</div>
+<div id="selectArea" class="hide">
+	<br>
+	<div id="userListArea">Selected users <span title="check this to show all the user names included in selected lists">(<input type="checkbox" id="showAll" onclick="updateUsers();">&nbsp;show names):</span>&nbsp;<span id="userList"></span></div>
+	<br>
+<table>
+<tr>
+	<tc>
+	<select class="cssbox" id='groupList' size='7' multiple title="hold Ctrl or cmd to select several users or groups"></select>
+	</tc>
+	<tc id="listText">
+		<p>&emsp;&emsp;&emsp;<button id="makeKeyBtn" title="Make or update a Folder Key for selected users. For Administrator use">New Folder Key</button></p>
+		<p>&emsp;&emsp;&emsp;<button id="adminBtn" title="Edit the user database remotely">Edit Users</button></p>
+		<p title="in Folder mode all files use the same key; you start by loading an encrypted Folder key">&emsp;&emsp;&emsp;<input type="checkbox" id="folderMode">&nbsp;Folder mode</p>
+	</tc>
+</tr>
+</table>
+</div>
+<div id="fileArea" class="hide">
+	<p>&nbsp;</p>
+	<p id="step2" class="">2. Now load a file or a Folder Key by dragging it into the area below, or click it to navigate to the file. Default: encrypt for Admin.</p>
+	<p id="step2b" class="hide">2. Now load a Folder Key by dragging it into the area below, or click it to navigate to the file.</p>
+	<p id="step3" class="hide">3. Finally, load the files to be processed by the same method. The files will be encrypted or decrypted automatically and saved to Downloads. You can process several files at a time.</p>
+<div id="fileMsg" class="message">Enter your Password first</div>
+<input type="file" id="fileIn" class="hide" multiple></input>
+<label for="fileIn" id="fileLbl" class="dropTarget" title="drop a File or a Folder key here">
+	<img id="fileImg" class="smallImg" src="images/folder-white.png">
+</label>
+<br><br>
+<span id="admin">Click here to toggle Administrator extras.</span>
+</div>
+</body>
+</html>
